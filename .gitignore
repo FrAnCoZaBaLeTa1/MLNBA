@@ -1,0 +1,30 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.so
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment files
+.env
+*.env
+
+# Data and models
+*.csv
+*.tsv
+*.zip
+*.h5
+*.pth
+*.pkl
+
+# Logs and output
+*.log
+
+# DVC files
+.cache/
+*.dvc
+
+# IDE settings
+.vscode/
+.idea/

@@ -23,7 +23,7 @@ __pycache__/
 
 # DVC files
 .cache/
-*.dvc
+!*.dvc
 
 # IDE settings
 .vscode/

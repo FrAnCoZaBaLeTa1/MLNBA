@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split, cross_val_score, KFold
+from sklearn.model_selection import train_test_split, cross_val_score, KFold, GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, log_loss, confusion_matrix, classification_report
 from sklearn.impute import SimpleImputer
@@ -170,6 +170,35 @@ def plot_feature_importance(model, features):
     
     return importance
 
+def tune_hyperparameters(X_train, y_train):
+    """Tune hyperparameters using GridSearchCV."""
+    param_grid = {
+        'n_estimators': [50, 100, 200],
+        'max_depth': [5, 10, 15, None],
+        'min_samples_split': [2, 5, 10],
+        'min_samples_leaf': [1, 2, 4],
+        'max_features': ['sqrt', 'log2']
+    }
+    
+    rf = RandomForestClassifier(random_state=42, class_weight='balanced')
+    grid_search = GridSearchCV(
+        estimator=rf,
+        param_grid=param_grid,
+        cv=5,
+        n_jobs=-1,
+        scoring='accuracy',
+        verbose=1
+    )
+    
+    print("\nPerforming hyperparameter tuning...")
+    grid_search.fit(X_train, y_train)
+    
+    print("\nBest parameters found:")
+    for param, value in grid_search.best_params_.items():
+        print(f"{param}: {value}")
+    
+    return grid_search.best_estimator_
+
 def main():
     # Load and prepare data
     print("Loading and preparing data...")
@@ -184,17 +213,20 @@ def main():
     print("\nPerforming cross-validation...")
     cross_validate_model(X_train, y_train)
     
-    # Train the model
-    print("\nTraining baseline model...")
-    model = train_baseline_model(X_train, y_train)
+    # Tune hyperparameters
+    best_model = tune_hyperparameters(X_train, y_train)
+    
+    # Train the model with best parameters
+    print("\nTraining model with optimized parameters...")
+    best_model.fit(X_train, y_train)
     
     # Evaluate the model
     print("\nModel Evaluation:")
-    accuracy, loss = evaluate_model(model, X_test, y_test)
+    accuracy, loss = evaluate_model(best_model, X_test, y_test)
     
     # Plot and print feature importance
     print("\nTop 10 Most Important Features:")
-    importance = plot_feature_importance(model, X_train.columns)
+    importance = plot_feature_importance(best_model, X_train.columns)
     print(importance.head(10))
 
 if __name__ == "__main__":

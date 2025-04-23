@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python preprocess.py
+    deps:
+    - path: archive/cbb.csv
+      hash: md5
+      md5: 974de656c525427f0a5eb917532f62d5
+      size: 463686
+    - path: preprocess.py
+      hash: md5
+      md5: 8a4fbaeaf1d2d20ab6c77e7546e91af4
+      size: 2416
+    outs:
+    - path: processed/cbb_cleaned.csv
+      hash: md5
+      md5: ccffd6a26d8fe717af8d02594420d1d8
+      size: 726572

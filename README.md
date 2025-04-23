@@ -175,3 +175,6 @@ Key findings from error analysis:
 - Feature engineering
 - Model development and optimization
 - Documentation
+
+  ### Fanni Soumanou
+- developed feature-selected model using top 10 features with evaluation comparison

@@ -178,3 +178,7 @@ Key findings from error analysis:
 
 ### Fanni Soumanou
 - developed feature-selected model using top 10 features with evaluation comparison
+
+### Bjorn Shurdha
+- documentation
+- model analysis

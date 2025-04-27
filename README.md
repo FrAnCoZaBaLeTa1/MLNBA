@@ -182,3 +182,8 @@ Key findings from error analysis:
 ### Bjorn Shurdha
 - documentation
 - model analysis
+### Franco Zabaleta
+- created github repository
+- collected the data from various soruces, mainly kaggle
+- implemented dvc so that the whole team could readily acceess the data on their home terminal if they wished and so the team could call functions that would manipulate all the data at once and put it into neat graphs that are way better than how appears on cbb files
+- Made a graph or two, showing the symmetric nature of our data`

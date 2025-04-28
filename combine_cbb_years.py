@@ -19,12 +19,12 @@ for filename in os.listdir(folder_path):
             df['YEAR'] = year
             dfs.append(df)
         else:
-            print(f"⚠️ Skipping file with unexpected name: {filename}")
+            print(f"Skipping file with unexpected name: {filename}")
 
 # Combine all good dataframes
 if dfs:
     combined_df = pd.concat(dfs, ignore_index=True)
     combined_df.to_csv('combined_fixed.csv', index=False)
-    print("✅ Done combining all files into combined_fixed.csv")
+    print("Done combining all files into combined_fixed.csv")
 else:
-    print("❌ No valid CSV files found!")
+    print("No valid CSV files found!")

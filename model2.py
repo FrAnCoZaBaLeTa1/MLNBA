@@ -47,6 +47,19 @@ def create_matchup_features(df):
     # Calculate team consistency
     matchup_df['CONSISTENCY'] = matchup_df['WAB'] / matchup_df['G']
     
+    # Add Team Strength Score
+    matchup_df['TEAM_STRENGTH'] = (
+        (matchup_df['ADJOE'] * 0.4) +  # Offensive efficiency (40% weight)
+        (100 - matchup_df['ADJDE']) * 0.4 +  # Defensive efficiency (40% weight)
+        (matchup_df['WIN_PCT'] * 100) * 0.2  # Win percentage (20% weight)
+    )
+    
+    # Normalize Team Strength Score to 0-100 scale
+    matchup_df['TEAM_STRENGTH'] = (
+        (matchup_df['TEAM_STRENGTH'] - matchup_df['TEAM_STRENGTH'].min()) / 
+        (matchup_df['TEAM_STRENGTH'].max() - matchup_df['TEAM_STRENGTH'].min()) * 100
+    )
+    
     # Select features for the model
     features = [
         'ADJOE', 'ADJDE', 'BARTHAG', 'EFG_O', 'EFG_D',
@@ -54,7 +67,7 @@ def create_matchup_features(df):
         '3P_O', '3P_D', 'ADJ_T', 'WAB', 'WIN_PCT', 'EFF_DIFF',
         'SOS_IMPACT', 'CONF_BARTHAG', 'CONF_ADJOE', 'CONF_ADJDE',
         'CONF_WAB', 'REL_CONF_STRENGTH', 'RECENT_PERF', 'OFF_EFF',
-        'DEF_EFF', 'CONSISTENCY'
+        'DEF_EFF', 'CONSISTENCY', 'TEAM_STRENGTH'  # Added Team Strength Score
     ]
     
     return matchup_df[features + ['YEAR', 'TEAM', 'POSTSEASON']]
@@ -77,7 +90,7 @@ def prepare_training_data(matchup_df, train_years=None, test_years=None):
         '3P_O', '3P_D', 'ADJ_T', 'WAB', 'WIN_PCT', 'EFF_DIFF',
         'SOS_IMPACT', 'CONF_BARTHAG', 'CONF_ADJOE', 'CONF_ADJDE',
         'CONF_WAB', 'REL_CONF_STRENGTH', 'RECENT_PERF', 'OFF_EFF',
-        'DEF_EFF', 'CONSISTENCY'
+        'DEF_EFF', 'CONSISTENCY', 'TEAM_STRENGTH'  # Added Team Strength Score
     ]
     
     # Create training and testing sets

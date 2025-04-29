@@ -39,6 +39,20 @@ def engineer_features(df):
     # This will be useful when creating matchup features later
     df['SEED_DIFF'] = 0  # Initialize with 0
     
+    # Calculate Team Strength Score
+    # This combines offensive and defensive efficiency with win percentage
+    df['TEAM_STRENGTH'] = (
+        (df['ADJOE'] * 0.4) +  # Offensive efficiency (40% weight)
+        (100 - df['ADJDE']) * 0.4 +  # Defensive efficiency (40% weight)
+        (df['WIN_PCT'] * 100) * 0.2  # Win percentage (20% weight)
+    )
+    
+    # Normalize Team Strength Score to 0-100 scale
+    df['TEAM_STRENGTH'] = (
+        (df['TEAM_STRENGTH'] - df['TEAM_STRENGTH'].min()) / 
+        (df['TEAM_STRENGTH'].max() - df['TEAM_STRENGTH'].min()) * 100
+    )
+    
     # Adjusted efficiency metrics are already in the dataset as ADJOE and ADJDE
     
     return df

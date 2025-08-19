@@ -180,8 +180,10 @@ Key findings from error analysis:
 - developed feature-selected model using top 10 features with evaluation comparison
 
 ### Bjorn Shurdha
-- documentation
-- model analysis
+- Model optimization
+- Feature Engineering
+- Documentation
+- Model analysis
 ### Franco Zabaleta
 - created github repository
 - collected the data from various soruces, mainly kaggle
